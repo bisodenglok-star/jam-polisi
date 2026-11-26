@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f172a">
+  <title>Jam Polisi</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #0f172a;
+      color: #f8fafc;
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      transition: background-color 0.2s;
+    }
+    /* Efek pendaran cahaya tipis di layar */
+    body.red-glow { background-color: #1e1018; }
+    body.blue-glow { background-color: #0e182e; }
+
+    .clock {
+      font-size: 4.5rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 10px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    .date {
+      font-size: 1.1rem;
+      color: #94a3b8;
+      margin-bottom: 40px;
+    }
+    .car-container {
+      width: 280px;
+      position: relative;
+      animation: bounce 1s infinite alternate ease-in-out;
+    }
+    @keyframes bounce {
+      from { transform: translateY(0px); }
+      to { transform: translateY(-3px); }
+    }
+    /* Lampu Sirine */
+    .light-red, .light-blue {
+      transition: all 0.08s ease;
+      opacity: 0.25;
+    }
+    .active-red {
+      opacity: 1 !important;
+      filter: drop-shadow(0 0 18px #ff1e1e) drop-shadow(0 0 35px #ff1e1e);
+    }
+    .active-blue {
+      opacity: 1 !important;
+      filter: drop-shadow(0 0 18px #0088ff) drop-shadow(0 0 35px #0088ff);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="clock" id="clock">00:00:00</div>
+  <div class="date" id="date">Memuat tanggal...</div>
+
+  <div class="car-container">
+    <svg viewBox="0 0 300 130" xmlns="http://w3.org">
+      <!-- Dudukan Lampu Atas -->
+      <rect x="122" y="25" width="56" height="6" rx="2" fill="#334155"/>
+      <!-- Lampu Merah (Kiri) -->
+      <rect id="siren-red" class="light-red" x="125" y="13" width="23" height="12" rx="4" fill="#ef4444"/>
+      <!-- Lampu Biru (Kanan) -->
+      <rect id="siren-blue" class="light-blue" x="152" y="13" width="23" height="12" rx="4" fill="#3b82f6"/>
+
+      <!-- Kabin Atas Mobil -->
+      <path d="M 75 65 L 98 31 L 202 31 L 228 65 Z" fill="#ffffff"/>
+      <!-- Kaca Jendela -->
+      <path d="M 85 62 L 103 36 L 145 36 L 145 62 Z" fill="#1e293b"/>
+      <path d="M 153 62 L 153 36 L 197 36 L 217 62 Z" fill="#1e293b"/>
+
+      <!-- Bodi Utama Mobil -->
+      <rect x="30" y="63" width="240" height="38" rx="12" fill="#1e293b"/>
+      <!-- Pintu Putih Tengah -->
+      <rect x="92" y="63" width="116" height="38" fill="#ffffff"/>
+      <!-- Tulisan POLICE -->
+      <text x="150" y="87" font-family="sans-serif" font-weight="900" font-size="16" fill="#0f172a" text-anchor="middle" letter-spacing="2">POLICE</text>
+
+      <!-- Lampu Depan & Belakang -->
+      <rect x="262" y="70" width="8" height="12" rx="3" fill="#fef08a"/>
+      <rect x="30" y="70" width="6" height="12" rx="2" fill="#ef4444"/>
+
+      <!-- Roda Belakang -->
+      <circle cx="80" cy="102" r="20" fill="#090d16"/>
+      <circle cx="80" cy="102" r="10" fill="#94a3b8"/>
+      <circle cx="80" cy="102" r="4" fill="#090d16"/>
+
+      <!-- Roda Depan -->
+      <circle cx="220" cy="102" r="20" fill="#090d16"/>
+      <circle cx="220" cy="102" r="10" fill="#94a3b8"/>
+      <circle cx="220" cy="102" r="4" fill="#090d16"/>
+    </svg>
+  </div>
+
+  <script>
+    const clockEl = document.getElementById('clock');
+    const dateEl = document.getElementById('date');
+    const sirenRed = document.getElementById('siren-red');
+    const sirenBlue = document.getElementById('siren-blue');
+
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = now.getSeconds();
+      const secStr = String(seconds).padStart(2, '0');
+
+      clockEl.textContent = `${hours}:${minutes}:${secStr}`;
+
+      const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+      dateEl.textContent = now.toLocaleDateString('id-ID', options);
+
+      // Detik genap = Merah nyala, Detik ganjil = Biru nyala
+      if (seconds % 2 === 0) {
+        sirenRed.classList.add('active-red');
+        sirenBlue.classList.remove('active-blue');
+        document.body.className = 'red-glow';
+      } else {
+        sirenBlue.classList.add('active-blue');
+        sirenRed.classList.remove('active-red');
+        document.body.className = 'blue-glow';
+      }
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Daftarkan Service Worker untuk PWA
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+</body>
+</html>
