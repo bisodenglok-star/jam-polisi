@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f172a">
-  <title>Jam Polisi</title>
+  <title>Jam Dinding Polisi</title>
   <link rel="manifest" href="manifest.json">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -20,110 +20,203 @@
       overflow: hidden;
       transition: background-color 0.2s;
     }
-    /* Efek pendaran cahaya tipis di layar */
-    body.red-glow { background-color: #1e1018; }
-    body.blue-glow { background-color: #0e182e; }
+    body.red-glow { background-color: #1c1017; }
+    body.blue-glow { background-color: #0e172a; }
 
-    .clock {
-      font-size: 4.5rem;
-      font-weight: 800;
-      letter-spacing: 3px;
-      font-variant-numeric: tabular-nums;
-      margin-bottom: 10px;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    }
-    .date {
-      font-size: 1.1rem;
-      color: #94a3b8;
-      margin-bottom: 40px;
-    }
-    .car-container {
-      width: 280px;
+    /* Bingkai Jam Dinding (Lintasan Jalan Raya) */
+    .clock-face {
+      width: 330px;
+      height: 330px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #1e293b 52%, #334155 54%, #1e293b 76%, #0f172a 78%);
+      border: 8px solid #475569;
+      box-shadow: 0 0 40px rgba(0,0,0,0.7), inset 0 0 25px rgba(0,0,0,0.8);
       position: relative;
-      animation: bounce 1s infinite alternate ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    @keyframes bounce {
-      from { transform: translateY(0px); }
-      to { transform: translateY(-3px); }
+
+    /* Garis putus-putus jalan raya melingkar */
+    .road-line {
+      position: absolute;
+      width: 245px;
+      height: 245px;
+      border-radius: 50%;
+      border: 2px dashed rgba(255, 255, 255, 0.25);
+      pointer-events: none;
     }
-    /* Lampu Sirine */
-    .light-red, .light-blue {
-      transition: all 0.08s ease;
+
+    /* Angka Jam 1 - 12 */
+    .number {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #e2e8f0;
+      padding: 10px;
+    }
+
+    /* Jarum Jam & Menit */
+    .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: bottom center;
+      border-radius: 6px;
+      z-index: 5;
+    }
+    .hour-hand {
+      width: 7px;
+      height: 75px;
+      background: #f8fafc;
+      margin-left: -3.5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+    .minute-hand {
+      width: 4.5px;
+      height: 105px;
+      background: #94a3b8;
+      margin-left: -2.25px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    /* Poros Tengah Jam */
+    .center-dot {
+      width: 16px;
+      height: 16px;
+      background: #ef4444;
+      border: 3px solid #ffffff;
+      border-radius: 50%;
+      position: absolute;
+      z-index: 10;
+    }
+
+    /* Jalur Putar Mobil Polisi (Detik) */
+    .car-orbit {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 8;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Posisi Mobil di Lintasan Atas (Menghadap Kanan / Searah Jarum Jam) */
+    .police-car {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 46px;
+      height: 24px;
+    }
+
+    /* Efek Lampu Strobo Mobil (Tampak Atas) */
+    .siren-red, .siren-blue {
       opacity: 0.25;
+      transition: opacity 0.08s;
     }
     .active-red {
       opacity: 1 !important;
-      filter: drop-shadow(0 0 18px #ff1e1e) drop-shadow(0 0 35px #ff1e1e);
+      filter: drop-shadow(0 0 8px #ff1e1e) drop-shadow(0 0 16px #ff1e1e);
     }
     .active-blue {
       opacity: 1 !important;
-      filter: drop-shadow(0 0 18px #0088ff) drop-shadow(0 0 35px #0088ff);
+      filter: drop-shadow(0 0 8px #0088ff) drop-shadow(0 0 16px #0088ff);
+    }
+
+    .digital-sub {
+      margin-top: 28px;
+      font-size: 1rem;
+      color: #94a3b8;
+      letter-spacing: 1px;
     }
   </style>
 </head>
 <body>
 
-  <div class="clock" id="clock">00:00:00</div>
-  <div class="date" id="date">Memuat tanggal...</div>
+  <div class="clock-face" id="clockFace">
+    <div class="road-line"></div>
 
-  <div class="car-container">
-    <svg viewBox="0 0 300 130" xmlns="http://w3.org">
-      <!-- Dudukan Lampu Atas -->
-      <rect x="122" y="25" width="56" height="6" rx="2" fill="#334155"/>
-      <!-- Lampu Merah (Kiri) -->
-      <rect id="siren-red" class="light-red" x="125" y="13" width="23" height="12" rx="4" fill="#ef4444"/>
-      <!-- Lampu Biru (Kanan) -->
-      <rect id="siren-blue" class="light-blue" x="152" y="13" width="23" height="12" rx="4" fill="#3b82f6"/>
+    <!-- Jarum Jam & Menit -->
+    <div class="hand hour-hand" id="hourHand"></div>
+    <div class="hand minute-hand" id="minuteHand"></div>
+    <div class="center-dot"></div>
 
-      <!-- Kabin Atas Mobil -->
-      <path d="M 75 65 L 98 31 L 202 31 L 228 65 Z" fill="#ffffff"/>
-      <!-- Kaca Jendela -->
-      <path d="M 85 62 L 103 36 L 145 36 L 145 62 Z" fill="#1e293b"/>
-      <path d="M 153 62 L 153 36 L 197 36 L 217 62 Z" fill="#1e293b"/>
-
-      <!-- Bodi Utama Mobil -->
-      <rect x="30" y="63" width="240" height="38" rx="12" fill="#1e293b"/>
-      <!-- Pintu Putih Tengah -->
-      <rect x="92" y="63" width="116" height="38" fill="#ffffff"/>
-      <!-- Tulisan POLICE -->
-      <text x="150" y="87" font-family="sans-serif" font-weight="900" font-size="16" fill="#0f172a" text-anchor="middle" letter-spacing="2">POLICE</text>
-
-      <!-- Lampu Depan & Belakang -->
-      <rect x="262" y="70" width="8" height="12" rx="3" fill="#fef08a"/>
-      <rect x="30" y="70" width="6" height="12" rx="2" fill="#ef4444"/>
-
-      <!-- Roda Belakang -->
-      <circle cx="80" cy="102" r="20" fill="#090d16"/>
-      <circle cx="80" cy="102" r="10" fill="#94a3b8"/>
-      <circle cx="80" cy="102" r="4" fill="#090d16"/>
-
-      <!-- Roda Depan -->
-      <circle cx="220" cy="102" r="20" fill="#090d16"/>
-      <circle cx="220" cy="102" r="10" fill="#94a3b8"/>
-      <circle cx="220" cy="102" r="4" fill="#090d16"/>
-    </svg>
+    <!-- Orbit Mobil Polisi (Pengganti Jarum Detik) -->
+    <div class="car-orbit" id="carOrbit">
+      <div class="police-car">
+        <!-- Gambar Mobil Polisi Tampak Atas -->
+        <svg viewBox="0 0 100 50" xmlns="http://w3.org">
+          <!-- Bodi Mobil Hitam -->
+          <rect x="6" y="7" width="88" height="36" rx="10" fill="#0f172a" stroke="#cbd5e1" stroke-width="2"/>
+          <!-- Atap Putih -->
+          <rect x="28" y="10" width="42" height="30" rx="5" fill="#ffffff"/>
+          <!-- Kaca Depan (Kanan) & Belakang (Kiri) -->
+          <path d="M 70 11 L 80 14 L 80 36 L 70 39 Z" fill="#38bdf8" opacity="0.7"/>
+          <path d="M 28 12 L 18 15 L 18 35 L 28 38 Z" fill="#38bdf8" opacity="0.7"/>
+          <!-- Lampu Sorot Depan -->
+          <ellipse cx="92" cy="14" rx="3" ry="4" fill="#fef08a"/>
+          <ellipse cx="92" cy="36" rx="3" ry="4" fill="#fef08a"/>
+          <!-- Lampu Strobo Atas (Merah & Biru) -->
+          <rect id="sirenRed" class="siren-red" x="45" y="11" width="8" height="13" rx="2" fill="#ef4444"/>
+          <rect id="sirenBlue" class="siren-blue" x="45" y="26" width="8" height="13" rx="2" fill="#3b82f6"/>
+        </svg>
+      </div>
+    </div>
   </div>
 
+  <div class="digital-sub" id="dateText">Memuat tanggal...</div>
+
   <script>
-    const clockEl = document.getElementById('clock');
-    const dateEl = document.getElementById('date');
-    const sirenRed = document.getElementById('siren-red');
-    const sirenBlue = document.getElementById('siren-blue');
+    const clockFace = document.getElementById('clockFace');
+    const hourHand = document.getElementById('hourHand');
+    const minuteHand = document.getElementById('minuteHand');
+    const carOrbit = document.getElementById('carOrbit');
+    const sirenRed = document.getElementById('sirenRed');
+    const sirenBlue = document.getElementById('sirenBlue');
+    const dateText = document.getElementById('dateText');
+
+    // Buat angka 1 sampai 12 secara melingkar
+    for (let i = 1; i <= 12; i++) {
+      const numDiv = document.createElement('div');
+      numDiv.className = 'number';
+      numDiv.style.transform = `rotate(${i * 30}deg)`;
+      numDiv.innerHTML = `<span style="display:inline-block; transform:rotate(-${i * 30}deg)">${i}</span>`;
+      clockFace.appendChild(numDiv);
+    }
+
+    let totalSecondsRotation = null;
+    let lastSec = null;
 
     function updateClock() {
       const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = now.getSeconds();
-      const secStr = String(seconds).padStart(2, '0');
+      const sec = now.getSeconds();
+      const min = now.getMinutes();
+      const hr = now.getHours();
 
-      clockEl.textContent = `${hours}:${minutes}:${secStr}`;
+      // Hitung sudut jarum jam & menit
+      const minDeg = min * 6 + sec * 0.1;
+      const hrDeg = (hr % 12) * 30 + min * 0.5;
 
-      const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-      dateEl.textContent = now.toLocaleDateString('id-ID', options);
+      minuteHand.style.transform = `rotate(${minDeg}deg)`;
+      hourHand.style.transform = `rotate(${hrDeg}deg)`;
 
-      // Detik genap = Merah nyala, Detik ganjil = Biru nyala
-      if (seconds % 2 === 0) {
+      // Putar mobil searah jarum jam terus-menerus tanpa mundur saat detik 0
+      if (totalSecondsRotation === null) {
+        totalSecondsRotation = sec * 6;
+      } else if (sec !== lastSec) {
+        totalSecondsRotation += 6;
+      }
+      lastSec = sec;
+      carOrbit.style.transform = `rotate(${totalSecondsRotation}deg)`;
+
+      // Lampu sirine kelap-kelip tiap detik
+      if (sec % 2 === 0) {
         sirenRed.classList.add('active-red');
         sirenBlue.classList.remove('active-blue');
         document.body.className = 'red-glow';
@@ -132,12 +225,14 @@
         sirenRed.classList.remove('active-red');
         document.body.className = 'blue-glow';
       }
+
+      const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+      dateText.textContent = now.toLocaleDateString('id-ID', options);
     }
 
-    setInterval(updateClock, 1000);
+    setInterval(updateClock, 200);
     updateClock();
 
-    // Daftarkan Service Worker untuk PWA
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
     }
