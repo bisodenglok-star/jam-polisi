@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f172a">
-  <title>Jam Polisi & Kereta Api</title>
+  <title>Jam Polisi & KAI Indonesia</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -50,7 +50,7 @@
       <div class="legend">🚑 Jam • 🏍️ Menit • 🚓 Detik</div>
     </div>
 
-    <!-- JAM 2: KERETA API (Hanya Detik yang 1 Lokomotif + 2 Gerbong) -->
+    <!-- JAM 2: KERETA API INDONESIA (KAI) -->
     <div class="clock-card">
       <div class="clock-face train-face" id="trainClock">
         <div class="track-outer"></div>
@@ -58,7 +58,7 @@
         <div class="track-hour"></div>
         <div class="center-island" id="digital2">00:00</div>
 
-        <!-- Lokomotif Uap (Jam - 1 Unit Pas di Rel Dalam) -->
+        <!-- Lokomotif Uap (Jam) -->
         <div class="orbit" id="steamOrbit">
           <svg class="veh-inner" viewBox="0 0 100 50">
             <rect x="8" y="12" width="32" height="26" rx="4" fill="#dc2626"/>
@@ -68,40 +68,65 @@
           </svg>
         </div>
 
-        <!-- Kereta Ekspres/KRL (Menit - 1 Unit Pas di Rel Tengah) -->
+        <!-- KRL Commuter Line (Menit) -->
         <div class="orbit" id="krlOrbit">
           <svg class="veh-mid" viewBox="0 0 110 46">
-            <rect x="6" y="10" width="98" height="26" rx="12" fill="#f8fafc" stroke="#ea580c" stroke-width="2.5"/>
-            <rect x="20" y="14" width="60" height="6" rx="2" fill="#ea580c"/>
-            <rect x="20" y="26" width="60" height="6" rx="2" fill="#1d4ed8"/>
-            <path d="M86 12 L98 18 L98 28 L86 34 Z" fill="#0f172a"/>
+            <rect x="6" y="10" width="98" height="26" rx="10" fill="#f8fafc" stroke="#dc2626" stroke-width="2.5"/>
+            <rect x="18" y="13" width="64" height="5" rx="1.5" fill="#dc2626"/>
+            <rect x="18" y="28" width="64" height="5" rx="1.5" fill="#f59e0b"/>
+            <path d="M86 12 L98 17 L98 29 L86 34 Z" fill="#0f172a"/>
           </svg>
         </div>
 
-        <!-- Kereta Cepat + 2 Gerbong Gandeng (Detik - Presisi di Rel Luar) -->
+        <!-- Rangkaian KAI CC206 + 2 Gerbong Eksekutif (Detik - Pas di Rel Luar) -->
         <div class="orbit sec-smooth" id="bulletOrbit">
           <svg class="train-full-svg" viewBox="0 0 310 310">
-            <!-- Gerbong 2 (-38 derajat di belakang kepala kereta) -->
-            <g transform="translate(155, 155) rotate(-38) translate(0, -113)">
-              <rect x="-15" y="-6.5" width="30" height="13" rx="3" fill="#0284c7" stroke="#e0f2fe" stroke-width="1.5"/>
-              <rect x="-11" y="-3" width="22" height="6" rx="1.5" fill="#ffffff"/>
+            <!-- Penyambung Gerbong (Coupler) -->
+            <g transform="translate(155, 155) rotate(-29.5) translate(0, -113)">
+              <rect x="-4" y="-3" width="8" height="6" fill="#0f172a"/>
             </g>
-            <!-- Gerbong 1 (-19 derajat di belakang kepala kereta) -->
-            <g transform="translate(155, 155) rotate(-19) translate(0, -113)">
-              <rect x="-15" y="-6.5" width="30" height="13" rx="3" fill="#0284c7" stroke="#e0f2fe" stroke-width="1.5"/>
-              <rect x="-11" y="-3" width="22" height="6" rx="1.5" fill="#ffffff"/>
+            <g transform="translate(155, 155) rotate(-10) translate(0, -113)">
+              <rect x="-4" y="-3" width="8" height="6" fill="#0f172a"/>
             </g>
-            <!-- Kepala Lokomotif (0 derajat = Tepat di Titik Detik) -->
+
+            <!-- Gerbong 2 KAI Eksekutif (Belakang) -->
+            <g transform="translate(155, 155) rotate(-39) translate(0, -113)">
+              <rect x="-15" y="-6.5" width="30" height="13" rx="2.5" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.2"/>
+              <rect x="-14" y="-5.2" width="28" height="2.2" fill="#1d4ed8"/>
+              <rect x="-14" y="3" width="28" height="2.2" fill="#f97316"/>
+              <rect x="-6" y="-2" width="12" height="4" rx="1" fill="#64748b"/>
+            </g>
+
+            <!-- Gerbong 1 KAI Eksekutif (Tengah) -->
+            <g transform="translate(155, 155) rotate(-19.5) translate(0, -113)">
+              <rect x="-15" y="-6.5" width="30" height="13" rx="2.5" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.2"/>
+              <rect x="-14" y="-5.2" width="28" height="2.2" fill="#1d4ed8"/>
+              <rect x="-14" y="3" width="28" height="2.2" fill="#f97316"/>
+              <rect x="-6" y="-2" width="12" height="4" rx="1" fill="#64748b"/>
+            </g>
+
+            <!-- Lokomotif KAI CC206 (Depan - Putih, Oranye & Biru Tua) -->
             <g transform="translate(155, 155) rotate(0) translate(0, -113)">
-              <path d="M-16 -6.5 H8 Q18 -6.5 20 0 Q18 6.5 8 6.5 H-16 Z" fill="#0284c7" stroke="#e0f2fe" stroke-width="1.5"/>
-              <path d="M8 -4 L15 -1.5 L15 1.5 L8 4 Z" fill="#0f172a"/>
-              <circle cx="18" cy="-2.5" r="1.3" fill="#fef08a"/>
-              <circle cx="18" cy="2.5" r="1.3" fill="#fef08a"/>
+              <!-- Bodi Putih Utama -->
+              <rect x="-17" y="-6.8" width="35" height="13.6" rx="3" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+              <!-- Garis Biru Tua Samping -->
+              <rect x="-15" y="-6.5" width="24" height="2.6" fill="#1e3a8a"/>
+              <rect x="-15" y="3.9" width="24" height="2.6" fill="#1e3a8a"/>
+              <!-- Moncong Oranye Khas Lokomotif KAI -->
+              <path d="M9 -6.5 H16 Q19 -6.5 19 0 Q19 6.5 16 6.5 H9 Z" fill="#f97316"/>
+              <!-- Kaca Kabin Masinis -->
+              <rect x="6" y="-4.5" width="4" height="9" rx="1" fill="#0f172a"/>
+              <!-- Kipas Mesin Atap -->
+              <circle cx="-4" cy="0" r="3" fill="#94a3b8"/>
+              <circle cx="-11" cy="0" r="2.5" fill="#94a3b8"/>
+              <!-- Lampu Sorot Depan -->
+              <circle cx="18.5" cy="-2.8" r="1.3" fill="#fef08a"/>
+              <circle cx="18.5" cy="2.8" r="1.3" fill="#fef08a"/>
             </g>
           </svg>
         </div>
       </div>
-      <div class="legend">🚂 Jam • 🚃 Menit • 🚄 Detik</div>
+      <div class="legend">🚂 Jam • 🚃 Menit • 🇮🇩 KAI Detik</div>
     </div>
   </div>
 
