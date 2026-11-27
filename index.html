@@ -16,6 +16,7 @@
       <div class="clock-face" id="policeClock">
         <div class="lane-outer"></div>
         <div class="lane-inner"></div>
+        <div class="lane-hour"></div>
         <div class="center-island" id="digital1">00:00</div>
 
         <div class="orbit" id="ambOrbit">
@@ -54,9 +55,9 @@
       <div class="clock-face train-face" id="trainClock">
         <div class="track-outer"></div>
         <div class="track-inner"></div>
+        <div class="track-hour"></div>
         <div class="center-island" id="digital2">00:00</div>
 
-        <!-- Lokomotif Uap (Jam) -->
         <div class="orbit" id="steamOrbit">
           <svg class="veh-inner" viewBox="0 0 100 50">
             <rect x="8" y="12" width="32" height="26" rx="4" fill="#dc2626"/>
@@ -66,7 +67,6 @@
           </svg>
         </div>
 
-        <!-- Kereta Ekspres/KRL (Menit) -->
         <div class="orbit" id="krlOrbit">
           <svg class="veh-mid" viewBox="0 0 110 46">
             <rect x="6" y="10" width="98" height="26" rx="12" fill="#f8fafc" stroke="#ea580c" stroke-width="2.5"/>
@@ -76,7 +76,6 @@
           </svg>
         </div>
 
-        <!-- Kereta Cepat/Lokomotif (Detik) -->
         <div class="orbit sec-smooth" id="bulletOrbit">
           <svg class="veh-outer" viewBox="0 0 110 46">
             <path d="M8 10 H80 Q104 10 106 23 Q104 36 80 36 H8 Z" fill="#0284c7" stroke="#e0f2fe" stroke-width="2"/>
