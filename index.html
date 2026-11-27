@@ -50,7 +50,7 @@
       <div class="legend">🚑 Jam • 🏍️ Menit • 🚓 Detik</div>
     </div>
 
-    <!-- JAM 2: KERETA API (1 LOKOMOTIF + 2 GERBONG) -->
+    <!-- JAM 2: KERETA API (Hanya Detik yang 1 Lokomotif + 2 Gerbong) -->
     <div class="clock-card">
       <div class="clock-face train-face" id="trainClock">
         <div class="track-outer"></div>
@@ -58,65 +58,45 @@
         <div class="track-hour"></div>
         <div class="center-island" id="digital2">00:00</div>
 
-        <!-- Kereta Uap + 2 Gerbong (Jam - Melengkung Ikuti Rel) -->
+        <!-- Lokomotif Uap (Jam - 1 Unit Pas di Rel Dalam) -->
         <div class="orbit" id="steamOrbit">
-          <svg class="train-inner-svg" viewBox="0 0 160 70">
-            <!-- Gerbong 2 (Paling Belakang) -->
-            <g transform="translate(22, 34) rotate(-32)">
-              <rect x="-15" y="-8" width="30" height="16" rx="3" fill="#b45309" stroke="#fde68a" stroke-width="1.5"/>
-            </g>
-            <!-- Gerbong 1 (Tengah) -->
-            <g transform="translate(50, 19) rotate(-15)">
-              <rect x="-15" y="-8" width="30" height="16" rx="3" fill="#d97706" stroke="#fde68a" stroke-width="1.5"/>
-            </g>
-            <!-- Lokomotif Utama (Depan - Tepat di Puncak) -->
-            <g transform="translate(82, 14)">
-              <rect x="-18" y="-9" width="36" height="18" rx="4" fill="#dc2626" stroke="#fbbf24" stroke-width="1.5"/>
-              <circle cx="11" cy="0" r="3.5" fill="#fef08a"/>
-            </g>
+          <svg class="veh-inner" viewBox="0 0 100 50">
+            <rect x="8" y="12" width="32" height="26" rx="4" fill="#dc2626"/>
+            <rect x="40" y="15" width="48" height="20" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+            <circle cx="76" cy="25" r="5" fill="#f59e0b"/>
+            <circle cx="20" cy="25" r="6" fill="#fef08a" opacity="0.6"/>
           </svg>
         </div>
 
-        <!-- Kereta Ekspres/KRL + 2 Gerbong (Menit) -->
+        <!-- Kereta Ekspres/KRL (Menit - 1 Unit Pas di Rel Tengah) -->
         <div class="orbit" id="krlOrbit">
-          <svg class="train-mid-svg" viewBox="0 0 200 70">
-            <!-- Gerbong 2 -->
-            <g transform="translate(36, 28) rotate(-25)">
-              <rect x="-18" y="-8" width="36" height="16" rx="4" fill="#f8fafc" stroke="#ea580c" stroke-width="2"/>
-              <rect x="-14" y="-3" width="28" height="6" fill="#1d4ed8"/>
-            </g>
-            <!-- Gerbong 1 -->
-            <g transform="translate(74, 16) rotate(-12)">
-              <rect x="-18" y="-8" width="36" height="16" rx="4" fill="#f8fafc" stroke="#ea580c" stroke-width="2"/>
-              <rect x="-14" y="-3" width="28" height="6" fill="#1d4ed8"/>
-            </g>
-            <!-- Kepala KRL (Tepat di Puncak) -->
-            <g transform="translate(114, 12)">
-              <rect x="-19" y="-8" width="38" height="16" rx="7" fill="#f8fafc" stroke="#ea580c" stroke-width="2"/>
-              <path d="M10 -6 L17 -2 L17 2 L10 6 Z" fill="#0f172a"/>
-            </g>
+          <svg class="veh-mid" viewBox="0 0 110 46">
+            <rect x="6" y="10" width="98" height="26" rx="12" fill="#f8fafc" stroke="#ea580c" stroke-width="2.5"/>
+            <rect x="20" y="14" width="60" height="6" rx="2" fill="#ea580c"/>
+            <rect x="20" y="26" width="60" height="6" rx="2" fill="#1d4ed8"/>
+            <path d="M86 12 L98 18 L98 28 L86 34 Z" fill="#0f172a"/>
           </svg>
         </div>
 
-        <!-- Kereta Cepat + 2 Gerbong (Detik) -->
+        <!-- Kereta Cepat + 2 Gerbong Gandeng (Detik - Presisi di Rel Luar) -->
         <div class="orbit sec-smooth" id="bulletOrbit">
-          <svg class="train-outer-svg" viewBox="0 0 240 75">
-            <!-- Gerbong 2 -->
-            <g transform="translate(52, 26) rotate(-20)">
-              <rect x="-20" y="-8" width="40" height="16" rx="4" fill="#0284c7" stroke="#e0f2fe" stroke-width="1.5"/>
-              <rect x="-15" y="-4" width="30" height="8" rx="2" fill="#ffffff"/>
+          <svg class="train-full-svg" viewBox="0 0 310 310">
+            <!-- Gerbong 2 (-38 derajat di belakang kepala kereta) -->
+            <g transform="translate(155, 155) rotate(-38) translate(0, -113)">
+              <rect x="-15" y="-6.5" width="30" height="13" rx="3" fill="#0284c7" stroke="#e0f2fe" stroke-width="1.5"/>
+              <rect x="-11" y="-3" width="22" height="6" rx="1.5" fill="#ffffff"/>
             </g>
-            <!-- Gerbong 1 -->
-            <g transform="translate(95, 16) rotate(-9)">
-              <rect x="-20" y="-8" width="40" height="16" rx="4" fill="#0284c7" stroke="#e0f2fe" stroke-width="1.5"/>
-              <rect x="-15" y="-4" width="30" height="8" rx="2" fill="#ffffff"/>
+            <!-- Gerbong 1 (-19 derajat di belakang kepala kereta) -->
+            <g transform="translate(155, 155) rotate(-19) translate(0, -113)">
+              <rect x="-15" y="-6.5" width="30" height="13" rx="3" fill="#0284c7" stroke="#e0f2fe" stroke-width="1.5"/>
+              <rect x="-11" y="-3" width="22" height="6" rx="1.5" fill="#ffffff"/>
             </g>
-            <!-- Kepala Lokomotif Cepat (Tepat di Puncak) -->
-            <g transform="translate(140, 12)">
-              <path d="M-20 -8 H10 Q22 -8 24 0 Q22 8 10 8 H-20 Z" fill="#0284c7" stroke="#e0f2fe" stroke-width="1.5"/>
-              <path d="M11 -5 L19 -2 L19 2 L11 5 Z" fill="#0f172a"/>
-              <circle cx="22" cy="-3" r="1.5" fill="#fef08a"/>
-              <circle cx="22" cy="3" r="1.5" fill="#fef08a"/>
+            <!-- Kepala Lokomotif (0 derajat = Tepat di Titik Detik) -->
+            <g transform="translate(155, 155) rotate(0) translate(0, -113)">
+              <path d="M-16 -6.5 H8 Q18 -6.5 20 0 Q18 6.5 8 6.5 H-16 Z" fill="#0284c7" stroke="#e0f2fe" stroke-width="1.5"/>
+              <path d="M8 -4 L15 -1.5 L15 1.5 L8 4 Z" fill="#0f172a"/>
+              <circle cx="18" cy="-2.5" r="1.3" fill="#fef08a"/>
+              <circle cx="18" cy="2.5" r="1.3" fill="#fef08a"/>
             </g>
           </svg>
         </div>
