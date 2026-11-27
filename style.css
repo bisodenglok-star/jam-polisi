@@ -1,79 +1,115 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  background-color: #0f172a;
-  color: #f8fafc;
-  font-family: system-ui, sans-serif;
+  background: radial-gradient(circle at center, #1e1b18 0%, #090807 100%);
+  color: #fef3c7;
+  font-family: Georgia, 'Times New Roman', serif;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 16px;
-  gap: 18px;
+  padding: 12px;
   overflow-x: hidden;
-  transition: background-color 0.2s;
 }
-body.red-glow { background-color: #1c1017; }
-body.blue-glow { background-color: #0e172a; }
 
-.clocks-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
+/* BODI UTAMA JAM BANDUL KAYU JATI */
+.grandfather-clock {
   width: 100%;
-  max-width: 640px;
-  justify-items: center;
-}
-.clock-card {
+  max-width: 420px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  filter: drop-shadow(0 20px 35px rgba(0,0,0,0.9));
 }
 
-/* Bingkai Dasar 4 Jam (Diameter 278px, Dalam 266px -> Pusat 133,133) */
+/* 1. Mahkota Lengkung Antik Atas */
+.clock-crown {
+  width: 92%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.finial {
+  width: 22px;
+  height: 28px;
+  background: radial-gradient(circle at 35% 35%, #fef08a, #ca8a04, #713f12);
+  border-radius: 50% 50% 30% 30%;
+  margin-bottom: -4px;
+  z-index: 2;
+}
+.crown-arch {
+  width: 100%;
+  height: 44px;
+  background: linear-gradient(180deg, #5c2d16 0%, #3b1909 100%);
+  border: 3px solid #b45309;
+  border-bottom: none;
+  border-radius: 140px 140px 0 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 6px;
+  box-shadow: inset 0 4px 10px rgba(251, 191, 36, 0.25);
+}
+.crown-arch span {
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  color: #fbbf24;
+  font-weight: bold;
+  text-shadow: 0 1px 3px #000;
+}
+
+/* 2. Kaca Etalase Atas (4 Jam Armada) */
+.upper-cabinet {
+  width: 96%;
+  background: linear-gradient(90deg, #3b1909, #5c2d16, #3b1909);
+  border: 4px solid #78350f;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: inset 0 0 15px #000;
+}
+.clocks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  background: #140b05;
+  padding: 10px;
+  border: 2.5px solid #d97706;
+  border-radius: 6px;
+  justify-items: center;
+}
+.clock-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Ukuran Masing-masing Jam di Dalam Etalase (170px, Dalam 162px -> Pusat 81,81) */
 .clock-face {
-  width: 278px;
-  height: 278px;
+  width: 170px;
+  height: 170px;
   border-radius: 50%;
   background: radial-gradient(circle, #0f172a 18%, #1e293b 20%, #1e293b 82%, #0f172a 84%);
-  border: 6px solid #475569;
-  box-shadow: 0 0 30px rgba(0,0,0,0.75), inset 0 0 20px rgba(0,0,0,0.85);
+  border: 4px solid #d97706;
+  box-shadow: 0 0 12px rgba(0,0,0,0.85), inset 0 0 10px rgba(0,0,0,0.9);
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: system-ui, sans-serif;
 }
-/* 2. Tema Kereta Api */
-.train-face {
-  background: radial-gradient(circle, #1c1917 18%, #292524 20%, #292524 82%, #1c1917 84%);
-  border-color: #78350f;
-}
-/* 3. Tema Laut Samudra */
-.sea-face {
-  background: radial-gradient(circle, #082f49 18%, #0369a1 22%, #0c4a6e 82%, #082f49 84%);
-  border-color: #0284c7;
-}
-/* 4. Tema Udara & Radar Langit */
-.sky-face {
-  background: radial-gradient(circle, #064e3b 18%, #0f172a 22%, #1e1b4b 82%, #0f172a 84%);
-  border-color: #10b981;
-}
+.train-face { background: radial-gradient(circle, #1c1917 18%, #292524 20%, #292524 82%, #1c1917 84%); }
+.sea-face   { background: radial-gradient(circle, #082f49 18%, #0369a1 22%, #0c4a6e 82%, #082f49 84%); }
+.sky-face   { background: radial-gradient(circle, #064e3b 18%, #0f172a 22%, #1e1b4b 82%, #0f172a 84%); }
 
-/* 3 Lingkaran Jalur Masing-masing Tema */
-.lane, .track, .wave, .radar {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-}
-.l-out { width: 202px; height: 202px; }
-.l-mid { width: 150px; height: 150px; }
-.l-in  { width: 98px;  height: 98px; }
+.lane, .track, .wave, .radar { position: absolute; border-radius: 50%; pointer-events: none; }
+.l-out { width: 122px; height: 122px; }
+.l-mid { width: 90px;  height: 90px; }
+.l-in  { width: 58px;  height: 58px; }
 
-.lane  { border: 1.5px dashed rgba(255,255,255,0.22); }
-.track { border: 3.5px dashed #78716c; box-shadow: 0 0 0 1.2px #a8a29e, inset 0 0 0 1.2px #a8a29e; }
-.wave  { border: 1.5px dotted rgba(186,230,253,0.45); }
-.radar { border: 1px solid rgba(52,211,153,0.3); }
+.lane  { border: 1px dashed rgba(255,255,255,0.25); }
+.track { border: 2.5px dashed #78716c; box-shadow: 0 0 0 1px #a8a29e; }
+.wave  { border: 1px dotted rgba(186,230,253,0.5); }
+.radar { border: 1px solid rgba(52,211,153,0.35); }
 
 .number {
   position: absolute;
@@ -81,47 +117,129 @@ body.blue-glow { background-color: #0e172a; }
   height: 100%;
   text-align: center;
   font-weight: 800;
-  font-size: 0.88rem;
-  color: #e2e8f0;
-  padding: 5px;
+  font-size: 0.62rem;
+  color: #fef3c7;
+  padding: 2px;
 }
 .center-island {
-  width: 54px;
-  height: 54px;
-  background: #0f172a;
-  border: 2px solid #475569;
+  width: 34px;
+  height: 34px;
+  background: #1c1008;
+  border: 1.5px solid #d97706;
   border-radius: 50%;
   position: absolute;
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.72rem;
+  font-size: 0.52rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: #fde68a;
 }
 
 .orbit { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; }
 .sec-smooth { transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
-/* Posisi Kendaraan Tepat di Tengah 3 Jalur */
 .v-in, .v-mid, .v-out { position: absolute; left: 50%; transform: translateX(-50%); }
-.v-in  { top: 74px; width: 34px; height: 17px; }
-.v-mid { top: 48px; width: 34px; height: 17px; }
-.v-out { top: 21px; width: 38px; height: 19px; }
-
+.v-in  { top: 45px; width: 22px; height: 11px; }
+.v-mid { top: 29px; width: 22px; height: 11px; }
+.v-out { top: 13px; width: 24px; height: 12px; }
 .full-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
 .siren-red, .siren-blue { opacity: 0.3; transition: opacity 0.08s; }
-.active-red { opacity: 1 !important; filter: drop-shadow(0 0 7px #ff1e1e); }
-.active-blue { opacity: 1 !important; filter: drop-shadow(0 0 7px #0088ff); }
+.active-red { opacity: 1 !important; filter: drop-shadow(0 0 5px #ff1e1e); }
+.active-blue { opacity: 1 !important; filter: drop-shadow(0 0 5px #0088ff); }
 
-.legend {
-  font-size: 0.78rem;
-  color: #cbd5e1;
-  background: rgba(30,41,59,0.8);
-  padding: 5px 12px;
-  border-radius: 16px;
-  border: 1px solid #334155;
+.tag { font-size: 0.7rem; letter-spacing: 2px; }
+
+/* 3. Lemari Kaca Bandul Bawah */
+.lower-cabinet {
+  width: 82%;
+  height: 220px;
+  background: linear-gradient(90deg, #3b1909, #5c2d16, #3b1909);
+  border-left: 4px solid #78350f;
+  border-right: 4px solid #78350f;
+  padding: 10px 18px;
+  display: flex;
+  justify-content: center;
 }
-.digital-sub { font-size: 0.9rem; color: #94a3b8; margin-top: 4px; }
+.pendulum-window {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #1c0f08 0%, #090502 100%);
+  border: 2.5px solid #b45309;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  box-shadow: inset 0 0 25px #000;
+}
+
+/* Rantai Pemberat Kiri & Kanan */
+.weight-chain {
+  position: absolute;
+  top: 0;
+  width: 3px;
+  height: 110px;
+  background: repeating-linear-gradient(to bottom, #d97706 0, #d97706 4px, transparent 4px, transparent 6px);
+}
+.left-chain  { left: 26%; height: 95px; }
+.right-chain { right: 26%; height: 120px; }
+.brass-weight {
+  position: absolute;
+  bottom: -36px;
+  left: -7px;
+  width: 17px;
+  height: 38px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #92400e, #fbbf24, #b45309);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.8);
+}
+
+/* Bandul Kuningan Utama yang Berayun Tiap Detik */
+.pendulum-rod {
+  position: absolute;
+  top: -10px;
+  width: 5px;
+  height: 165px;
+  background: linear-gradient(90deg, #92400e, #fde047, #92400e);
+  transform-origin: top center;
+  animation: swing 2s infinite ease-in-out;
+  display: flex;
+  justify-content: center;
+}
+.pendulum-bob {
+  position: absolute;
+  bottom: -24px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fef9c3, #eab308 45%, #854d0e 90%);
+  border: 2px solid #fef08a;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.9), inset 0 0 8px #713f12;
+}
+@keyframes swing {
+  0%, 100% { transform: rotate(-16deg); }
+  50%      { transform: rotate(16deg); }
+}
+
+/* 4. Kaki Lemari & Plakat Tanggal */
+.clock-base {
+  width: 94%;
+  background: linear-gradient(180deg, #5c2d16 0%, #2d1206 100%);
+  border: 4px solid #78350f;
+  border-radius: 4px 4px 12px 12px;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+}
+.brass-plaque {
+  background: linear-gradient(90deg, #92400e, #f59e0b, #92400e);
+  color: #1c0a00;
+  font-weight: bold;
+  font-size: 0.78rem;
+  padding: 5px 14px;
+  border-radius: 4px;
+  border: 1px solid #fef08a;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.7);
+}
